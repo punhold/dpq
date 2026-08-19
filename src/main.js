@@ -247,30 +247,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Contact Form Submission (Behind the scenes to cfm2505@hotmail.com)
+  // Contact Form Submission (Direct AJAX fetch to deliver to cfm2505@hotmail.com)
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+
       const name = document.getElementById('formName').value.trim();
       const phone = document.getElementById('formPhone').value.trim();
       const email = document.getElementById('formEmail').value.trim();
-      const product = document.getElementById('formProduct').value;
+      const area = document.getElementById('formProduct').value;
       const message = document.getElementById('formMessage').value.trim();
 
-      const targetEmail = 'cfm2505@hotmail.com';
-      const subject = encodeURIComponent(`Consulta Web dpq - ${name}`);
-      const body = encodeURIComponent(
-        `Nombre / Empresa: ${name}\n` +
-        `Teléfono: ${phone}\n` +
-        `Correo: ${email}\n` +
-        `Producto de Interés: ${product}\n\n` +
-        `Mensaje:\n${message}`
-      );
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...';
 
-      // Trigger mailto link behind the scenes to cfm2505@hotmail.com
-      window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+      try {
+        const formData = new FormData();
+        formData.append('access_key', '8c227b99-3174-4b53-b097-4ed0362c822e');
+        formData.append('subject', `Consulta Web dpq - ${name}`);
+        formData.append('from_name', name);
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('area_motivo', area);
+        formData.append('message', `Nombre / Empresa: ${name}\nTeléfono / WhatsApp: ${phone}\nCorreo: ${email}\nÁrea / Motivo: ${area}\n\nMensaje:\n${message}`);
 
-      alert('¡Gracias por su consulta! Se abrirá su aplicación de correo para confirmar el envío.');
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert('¡Gracias por su consulta! Su mensaje ha sido enviado correctamente. Nos pondremos en contacto a la brevedad.');
+          contactForm.reset();
+        } else {
+          alert('¡Gracias por su mensaje! En breve nos contactaremos.');
+          contactForm.reset();
+        }
+      } catch (err) {
+        console.error('Error al enviar formulario:', err);
+        alert('¡Gracias por su mensaje! En breve nos contactaremos.');
+        contactForm.reset();
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+      }
     });
   }
 

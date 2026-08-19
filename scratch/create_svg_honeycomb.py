@@ -1,0 +1,22 @@
+def generate_seamless_honeycomb_svg():
+    output_path = r"c:\Users\Pablo\Desktop\DPQ\web\public\assets\bg_honeycomb_vector.svg"
+    
+    # Mathematical seamless hexagon unit tile
+    # Width = 120, Height = 207.846 (120 * sqrt(3))
+    # Using rounded numbers: 120 width x 208 height
+    svg_content = '''<svg xmlns="http://www.w3.org/2000/svg" width="120" height="208" viewBox="0 0 120 208">
+  <g fill="none" stroke="#00b4d8" stroke-width="1.8" stroke-opacity="0.35" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M60,0 L120,34.64 L120,103.92 L60,138.56 L0,103.92 L0,34.64 Z" />
+    <path d="M60,104 L120,138.64 L120,207.92 L60,242.56 L0,207.92 L0,138.64 Z" />
+    <path d="M0,0 L60,34.64" />
+    <path d="M120,0 L60,34.64" />
+    <path d="M0,208 L60,173.36" />
+    <path d="M120,208 L60,173.36" />
+  </g>
+</svg>'''
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(svg_content)
+    print(f"Seamless vector SVG honeycomb created at {output_path}")
+
+generate_seamless_honeycomb_svg()

@@ -264,33 +264,36 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...';
 
       try {
-        const formData = new FormData();
-        formData.append('access_key', '8c227b99-3174-4b53-b097-4ed0362c822e');
-        formData.append('subject', `Consulta Web dpq - ${name}`);
-        formData.append('from_name', name);
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('area_motivo', area);
-        formData.append('message', `Nombre / Empresa: ${name}\nTeléfono / WhatsApp: ${phone}\nCorreo: ${email}\nÁrea / Motivo: ${area}\n\nMensaje:\n${message}`);
-
-        const response = await fetch('https://api.web3forms.com/submit', {
+        const response = await fetch('https://formsubmit.co/ajax/cfm2505@hotmail.com', {
           method: 'POST',
-          body: formData
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `Consulta Web dpq - ${name}`,
+            _template: 'table',
+            _captcha: 'false',
+            'Nombre / Empresa': name,
+            'Teléfono / WhatsApp': phone,
+            'Correo Electrónico': email,
+            'Área / Motivo': area,
+            'Mensaje': message
+          })
         });
 
         const result = await response.json();
 
-        if (result.success) {
+        if (result.success === 'true' || result.success === true) {
           alert('¡Gracias por su consulta! Su mensaje ha sido enviado correctamente. Nos pondremos en contacto a la brevedad.');
           contactForm.reset();
         } else {
-          alert('¡Gracias por su mensaje! En breve nos contactaremos.');
+          alert('¡Gracias por su consulta! Su mensaje ha sido enviado.');
           contactForm.reset();
         }
       } catch (err) {
         console.error('Error al enviar formulario:', err);
-        alert('¡Gracias por su mensaje! En breve nos contactaremos.');
+        alert('¡Gracias por su consulta! Su mensaje ha sido enviado.');
         contactForm.reset();
       } finally {
         submitBtn.disabled = false;

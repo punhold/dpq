@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <button class="btn btn-glass btn-sm btn-block btn-details" data-id="${item.id}">
             <i class="fa-solid fa-circle-info"></i> Ficha & Consulta
           </button>
-          <a href="https://wa.me/5493548588580?text=${encodeURIComponent(`Hola dpq, quisiera consultar disponibilidad y cotización del producto: ${item.name} (${item.tagline})`)}" 
+          <a href="https://wa.me/5493513335836?text=${encodeURIComponent(`Hola dpq, quisiera consultar disponibilidad y cotización del producto: ${item.name} (${item.tagline})`)}" 
              target="_blank" 
              class="btn btn-whatsapp btn-sm" 
              title="Consultar por WhatsApp">
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <a href="https://wa.me/5493548588580?text=${waMsg}" target="_blank" class="btn btn-whatsapp btn-block" style="flex: 1;">
+        <a href="https://wa.me/5493513335836?text=${waMsg}" target="_blank" class="btn btn-whatsapp btn-block" style="flex: 1;">
           <i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp
         </a>
         <a href="#contacto" class="btn btn-primary btn-block" style="flex: 1;" onclick="document.getElementById('productModal').classList.remove('active');">
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (product && product !== 'general') text += ` Me interesa el producto: ${product}.`;
       if (message) text += ` Consulta: ${message}`;
 
-      window.open(`https://wa.me/5493548588580?text=${encodeURIComponent(text)}`, '_blank');
+      window.open(`https://wa.me/5493513335836?text=${encodeURIComponent(text)}`, '_blank');
     });
   }
 
